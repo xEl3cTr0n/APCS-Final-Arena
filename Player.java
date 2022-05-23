@@ -18,6 +18,10 @@ public class Player extends Entity {
 	public final int screenX;
 	public final int screenY;
 	
+	int hasHeal = 0;
+	int hasShield = 0;
+	
+	
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -26,8 +30,10 @@ public class Player extends Entity {
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		solidArea = new Rectangle();
-		solidArea.x = 0;
+		solidArea.x = 8;
 		solidArea.y = 16;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -37,14 +43,14 @@ public class Player extends Entity {
 	
 	public void getPlayerImage() {
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+			up1 = ImageIO.read(getClass().getResourceAsStream("/player/slayerUp1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/slayerUp2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/slayerDown1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/slayerDown2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/slayerLeft1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/slayerLeft2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/slayerRight1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/slayerRight2.png"));
 
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -77,6 +83,9 @@ public class Player extends Entity {
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
+			int objIndex = gp.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
+			
 			if (collisionOn == false) {
 				switch(direction) {
 				case "up": worldY -= speed; break;
@@ -98,6 +107,25 @@ public class Player extends Entity {
 		}
 		
 	}
+	
+	public void pickUpObject(int i) {
+		if (i != 999) {
+			String objectName = gp.obj[i].name;
+			switch(objectName) {
+			case "Heal":
+				hasHeal++;
+				gp.obj[i] = null;
+				System.out.println("Heals: " + hasHeal);
+				break;
+			case "Shield":
+				hasShield++;
+				gp.obj[i] = null;
+				System.out.println("Shields: " + hasShield);
+				break;
+			}
+		}
+	}
+	
 	public void draw(Graphics2D g2) {
 		//g2.setColor(Color.white);
 		//g2.fillRect(x, y, gp.tileSize, gp.tileSize);
