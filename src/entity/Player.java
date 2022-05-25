@@ -22,6 +22,7 @@ public class Player extends Entity {
 	public int hasHeal = 0;
 	int hasShield = 0;
 	int timeElapsed = 0;
+	int hasGrenade = 0;
 	
 	
 	
@@ -91,7 +92,7 @@ public class Player extends Entity {
 				direction = "right";
 			}
 			
-			collisionOn = false;
+			collisionOn = false; // should this be true? or it updates automatically
 			gp.cChecker.checkTile(this);
 			
 			int objIndex = gp.cChecker.checkObject(this, true);
@@ -136,7 +137,12 @@ public class Player extends Entity {
 			case "speedBoost":
 				speed +=3;
 				gp.obj[i] = null;
-				gp.ui.showMessage("Go fast");
+				gp.ui.showMessage("Speed Boost");
+				break;
+			case "Holy Hand Grenade":
+				hasGrenade++;
+				gp.obj[i] = null;
+				gp.ui.showMessage("You got a Holy Hand Grenade");
 				break;
 			}
 		}

@@ -14,6 +14,7 @@ public class Entity {
 	public int spriteNum = 1;
 	public Rectangle solidArea;
 	public int solidAreaDefaultX, solidAreaDefaultY;
-	public boolean collisionOn = false;
+	public boolean collisionOn = false; 
+	// should this be true? or does it get updated via code?
 	
 }
