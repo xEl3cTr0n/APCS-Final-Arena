@@ -22,7 +22,6 @@ public class Player extends Entity {
 	public int hasHeal = 0;
 	int hasShield = 0;
 	int timeElapsed = 0;
-	int hasGrenade = 0;
 	
 	
 	
@@ -45,36 +44,36 @@ public class Player extends Entity {
 	}
 	
 	public void getPlayerImage() {
-		up1 = setup("slayerUp1");
-		up2 = setup("slayerUp2");
-		down1 = setup("slayerDown1");
-		down2 = setup("slayerDown2");
-		left1 = setup("slayerLeft1");
-		left2 = setup("slayerLeft2");
-		right1 = setup("slayerRight1");
-		right2 = setup("slayerRight2");
-	}
-	
-	public BufferedImage setup(String imageName) {
-		UtilityTool uTool = new UtilityTool();
-		BufferedImage image = null;
-		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-			image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return image;
+		up1 = setUp("slayerUp1");
+		up2 = setUp("slayerUp2");
+		down1 = setUp("slayerDown1");
+		down2 = setUp("slayerDown2");
+		left1 = setUp("slayerLeft1");
+		left2 = setUp("slayerLeft2");
+		right1 = setUp("slayerRight1");
+		right2 = setUp("slayerRight2");
 	}
 	
 	public void setDefaultValues() {
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
-		speed = 4;
+		speed = 4;	
 		direction = "down";
 	}
+
+    public BufferedImage setUp(String imagePath){
+		UtilityTool uTool = new UtilityTool();
+		BufferedImage scaledImage = null;
+
+		try{
+		   scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/"+imagePath+".png"));
+		   scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return scaledImage;
+	}
+
 	public void update() {
 		
 		if (keyH.upPressed == true || keyH.downPressed == true || 
@@ -92,7 +91,7 @@ public class Player extends Entity {
 				direction = "right";
 			}
 			
-			collisionOn = false; // should this be true? or it updates automatically
+			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
 			int objIndex = gp.cChecker.checkObject(this, true);
@@ -127,22 +126,16 @@ public class Player extends Entity {
 			case "Heal":
 				hasHeal++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("You got a heal");
+				System.out.println("Heals: " + hasHeal);
 				break;
 			case "Shield":
 				hasShield++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("You got a shield");				
+				System.out.println("Shields: " + hasShield);
 				break;
 			case "speedBoost":
 				speed +=3;
 				gp.obj[i] = null;
-				gp.ui.showMessage("Speed Boost");
-				break;
-			case "Holy Hand Grenade":
-				hasGrenade++;
-				gp.obj[i] = null;
-				gp.ui.showMessage("You got a Holy Hand Grenade");
 				break;
 			}
 		}
@@ -187,7 +180,27 @@ public class Player extends Entity {
 			}
 			break;
 		}
-		g2.drawImage(image, screenX, screenY, null);
+
+
+        int x = screenX;
+		int y = screenY;
+		if(screenX > worldX){
+			x= worldX;
+		}
+		if(screenY > worldY){
+			y= worldY;
+		}
+
+		int rightOffset = gp.screenWidth - screenX;
+		if(rightOffset > gp.worldWidth - worldX){
+			x = gp.screenWidth - (gp.worldWidth - worldX);
+		}	
+		int bottomOffset = gp.screenHeight - screenY;
+		if(bottomOffset > gp.worldHeight - worldY){
+			y = gp.screenHeight - (gp.worldHeight - worldY);
+		}	
+
+		g2.drawImage(image, x, y, null);
 	}
 		
 }

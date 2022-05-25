@@ -9,7 +9,6 @@ import main.GamePanel;
 public class OBJ_speedBoost extends SuperObject {
 	GamePanel gp;
 	public OBJ_speedBoost(GamePanel gp) {
-		this.gp = gp;
 		name = "speedBoost";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/speedBoost.png"));

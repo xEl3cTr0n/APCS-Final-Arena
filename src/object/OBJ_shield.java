@@ -9,7 +9,6 @@ import main.GamePanel;
 public class OBJ_shield extends SuperObject {
 	GamePanel gp;
 	public OBJ_shield(GamePanel gp) {
-		this.gp = gp;
 		name = "Shield";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/shield.png"));
