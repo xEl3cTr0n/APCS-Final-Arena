@@ -6,11 +6,9 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
-
 public class OBJ_heal extends SuperObject {
 	GamePanel gp;
 	public OBJ_heal(GamePanel gp) {
-		this.gp = gp;
 		name = "Heal";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/heal.png"));
