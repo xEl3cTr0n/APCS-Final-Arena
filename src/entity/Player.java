@@ -22,6 +22,7 @@ public class Player extends Entity {
 	public int hasHeal = 0;
 	int hasShield = 0;
 	int timeElapsed = 0;
+	int hasGrenade = 0;
 	
 	
 	
@@ -53,7 +54,7 @@ public class Player extends Entity {
 		right1 = setUp("slayerRight1");
 		right2 = setUp("slayerRight2");
 	}
-	
+
 	public void setDefaultValues() {
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
@@ -126,16 +127,22 @@ public class Player extends Entity {
 			case "Heal":
 				hasHeal++;
 				gp.obj[i] = null;
-				System.out.println("Heals: " + hasHeal);
+				gp.ui.showMessage("Heals: " + hasHeal);
 				break;
 			case "Shield":
 				hasShield++;
 				gp.obj[i] = null;
-				System.out.println("Shields: " + hasShield);
+				gp.ui.showMessage("Shields: " + hasShield);
 				break;
 			case "speedBoost":
 				speed +=3;
 				gp.obj[i] = null;
+				gp.ui.showMessage("Speed Boost");
+				break;
+			case "Holy Hand Grenade":
+				hasGrenade++;
+				gp.obj[i] = null;
+				gp.ui.showMessage("Grenades: " + hasGrenade);
 				break;
 			}
 		}
