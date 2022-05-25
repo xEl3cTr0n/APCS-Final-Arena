@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import object.OBJ_heal;
+import object.OBJ_shield;
+import object.OBJ_speedBoost;
+import object.OBJ_HHG;
 
 public class UI {
 	GamePanel gp;
